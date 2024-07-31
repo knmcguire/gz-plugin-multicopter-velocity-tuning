@@ -22,6 +22,12 @@ import QtQuick.Layouts 1.3
 
 GridLayout {
   columns: 2
+  columnSpacing: 10
+  Layout.minimumWidth: 350
+  Layout.minimumHeight: 500
+  anchors.fill: parent
+  anchors.leftMargin: 10
+  anchors.rightMargin: 10
 
   Label {
     text: 'number'
@@ -31,10 +37,10 @@ GridLayout {
   }
   Slider {
       Layout.columnSpan: 2
-      from: 1.0
-      value: 1.0
-      to: 5.0
-      stepSize: 0.1
+      from: 0.01
+      value: 0.03
+      to: 1.0
+      stepSize: 0.01
       onMoved: function() {
         TuningPlugin.number = value;
       }

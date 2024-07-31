@@ -98,7 +98,7 @@ void LeeVelocityController::CalculateRotorVelocities(
 {
 
   auto number = this->controllerParameters.velocityGain[1];
-    gzmsg << number<< std::endl;
+    gzmsg << "new gain " << number<< std::endl;
 
   Eigen::Vector3d acceleration =
       this->ComputeDesiredAcceleration(_frameData, _cmdVel);

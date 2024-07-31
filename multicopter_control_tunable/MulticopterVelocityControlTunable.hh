@@ -181,6 +181,7 @@ namespace systems
     /// air, disabling the controller will cause it to fall. If true, the
     /// controller becomes enabled and waits for a twist message.
     private: void OnEnable(const msgs::Boolean &_msg);
+    private: void OnGainUpdate(const msgs::Double &_msg);
 
     /// \brief Publish provided rotor velocities
     /// \param[in] _ecm Mutable reference to the EntityComponentManager
@@ -232,6 +233,8 @@ namespace systems
     /// that the controller will try to maintain. A command of zeros must be
     /// given to stop the vehicle.
     private: std::optional<msgs::Twist> cmdVelMsg;
+
+    private: msgs::Double velocityGainMsg;
 
     /// \brief Maximum commanded linear velocity
     private: math::Vector3d maximumLinearVelocity;

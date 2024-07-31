@@ -47,7 +47,7 @@ void TuningPlugin::Update(const gz::sim::UpdateInfo & /*_info*/,
     gzerr << "Invalid topic name: " << topicname << std::endl;
     return;
   }
-  gzmsg << this->number << std::endl;
+  gzmsg << "slider "<< this->number << std::endl;
 
   auto pub = this->node.Advertise<gz::msgs::Double>(topic);
   pub.Publish(msg);

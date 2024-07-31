@@ -295,6 +295,10 @@ void MulticopterVelocityControlTunable::Configure(const Entity &_entity,
                        this);
   gzmsg << "MulticopterVelocityControl subscribing to Boolean messages on ["
          << enableTopic << "]" << std::endl;
+  std::string Gaintopicname = "/vel_gain_x";
+
+    this->node.Subscribe(Gaintopicname, &MulticopterVelocityControlTunable::OnGainUpdate,
+                       this);
 
   // Create the Actuators component to take control of rotor speeds
   this->rotorVelocitiesMsg.mutable_velocity()->Resize(
@@ -404,7 +408,8 @@ void MulticopterVelocityControlTunable::PreUpdate(
     // Errors would have already been printed
     return;
   }
-  Eigen::Vector3d velocityGainNew(0.02, 0.02, 0.02);
+  double number = this->velocityGainMsg.data();
+  Eigen::Vector3d velocityGainNew(number, number, number);
 
   this->velocityController->UpdateParameters(velocityGainNew);
   this->velocityController->CalculateRotorVelocities(*frameData, cmdVel,
@@ -419,6 +424,12 @@ void MulticopterVelocityControlTunable::OnTwist(
 {
   std::lock_guard<std::mutex> lock(this->cmdVelMsgMutex);
   this->cmdVelMsg = _msg;
+}
+
+void MulticopterVelocityControlTunable::OnGainUpdate(
+    const msgs::Double &_msg)
+{
+  this->velocityGainMsg = _msg;
 }
 
 //////////////////////////////////////////////////
