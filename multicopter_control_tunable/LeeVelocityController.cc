@@ -85,10 +85,21 @@ bool LeeVelocityController::InitializeParameters()
 }
 
 //////////////////////////////////////////////////
+bool LeeVelocityController::UpdateParameters(Eigen::Vector3d newVelocityGain)
+{
+  this->controllerParameters.velocityGain = newVelocityGain;
+  return true;
+}
+
+//////////////////////////////////////////////////
 void LeeVelocityController::CalculateRotorVelocities(
     const FrameData &_frameData, const EigenTwist &_cmdVel,
     Eigen::VectorXd &_rotorVelocities) const
 {
+
+  auto number = this->controllerParameters.velocityGain[1];
+    gzmsg << number<< std::endl;
+
   Eigen::Vector3d acceleration =
       this->ComputeDesiredAcceleration(_frameData, _cmdVel);
 

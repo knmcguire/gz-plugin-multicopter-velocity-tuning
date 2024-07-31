@@ -89,6 +89,8 @@ namespace multicopter_control_tunable
     /// \brief Initialize controller parameters
     /// \return True if successful.
     private: bool InitializeParameters();
+    
+    public: bool UpdateParameters(Eigen::Vector3d velocityGainNew);
 
     /// \brief Velocity controller parameters
     private: LeeVelocityControllerParameters controllerParameters;

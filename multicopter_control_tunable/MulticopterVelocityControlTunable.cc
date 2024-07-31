@@ -339,7 +339,7 @@ void MulticopterVelocityControlTunable::PreUpdate(
     EntityComponentManager &_ecm)
 {
   GZ_PROFILE("MulticopterVelocityControlTunable::PreUpdate");
-  gzmsg << "hello" << std::endl;
+  
 
   if (!this->initialized)
   {
@@ -404,7 +404,9 @@ void MulticopterVelocityControlTunable::PreUpdate(
     // Errors would have already been printed
     return;
   }
+  Eigen::Vector3d velocityGainNew(0.02, 0.02, 0.02);
 
+  this->velocityController->UpdateParameters(velocityGainNew);
   this->velocityController->CalculateRotorVelocities(*frameData, cmdVel,
                                                      this->rotorVelocities);
 
