@@ -15,8 +15,8 @@
  *
  */
 
-#ifndef GZ_SIM_SYSTEMS_MULTICOPTERVELOCITYCONTROL_PARAMETERS_HH_
-#define GZ_SIM_SYSTEMS_MULTICOPTERVELOCITYCONTROL_PARAMETERS_HH_
+#ifndef GZ_SIM_SYSTEMS_MULTICOPTERVELOCITYCONTROLTUNABLE_PARAMETERS_HH_
+#define GZ_SIM_SYSTEMS_MULTICOPTERVELOCITYCONTROLTUNABLE_PARAMETERS_HH_
 
 #include <Eigen/Geometry>
 #include <vector>
@@ -31,7 +31,7 @@ namespace sim
 inline namespace GZ_SIM_VERSION_NAMESPACE {
 namespace systems
 {
-namespace multicopter_control
+namespace multicopter_control_tunable
 {
   /// \brief A struct that holds various properties of a rotor
   struct Rotor

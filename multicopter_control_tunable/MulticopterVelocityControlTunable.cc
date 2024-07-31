@@ -48,7 +48,7 @@
 using namespace gz;
 using namespace sim;
 using namespace systems;
-using namespace multicopter_control;
+using namespace multicopter_control_tunable;
 
 //////////////////////////////////////////////////
 void MulticopterVelocityControlTunable::Configure(const Entity &_entity,
@@ -338,7 +338,8 @@ void MulticopterVelocityControlTunable::PreUpdate(
     const UpdateInfo &_info,
     EntityComponentManager &_ecm)
 {
-  GZ_PROFILE("MulticopterVelocityControl::PreUpdate");
+  GZ_PROFILE("MulticopterVelocityControlTunable::PreUpdate");
+  gzmsg << "hello" << std::endl;
 
   if (!this->initialized)
   {

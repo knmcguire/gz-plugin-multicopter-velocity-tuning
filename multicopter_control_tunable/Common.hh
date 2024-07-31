@@ -38,7 +38,7 @@ namespace sim
 inline namespace GZ_SIM_VERSION_NAMESPACE {
 namespace systems
 {
-namespace multicopter_control
+namespace multicopter_control_tunable
 {
   /// \brief Struct containing linear and angular velocities
   struct EigenTwist

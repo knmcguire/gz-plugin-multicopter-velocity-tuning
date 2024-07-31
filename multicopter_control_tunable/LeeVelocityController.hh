@@ -15,8 +15,8 @@
  *
  */
 
-#ifndef GZ_SIM_SYSTEMS_MULTICOPTER_CONTROL_LEEVELOCITYCONTROLLER_HH_
-#define GZ_SIM_SYSTEMS_MULTICOPTER_CONTROL_LEEVELOCITYCONTROLLER_HH_
+#ifndef GZ_SIM_SYSTEMS_MULTICOPTER_CONTROL_TUNABLE_LEEVELOCITYCONTROLLER_HH_
+#define GZ_SIM_SYSTEMS_MULTICOPTER_CONTROL_TUNABLE_LEEVELOCITYCONTROLLER_HH_
 
 #include <Eigen/Geometry>
 #include <memory>
@@ -33,7 +33,7 @@ namespace sim
 inline namespace GZ_SIM_VERSION_NAMESPACE {
 namespace systems
 {
-namespace multicopter_control
+namespace multicopter_control_tunable
 {
   /// \brief Data structure containing various parameters for the Lee velocity
   /// controller

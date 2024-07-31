@@ -14,8 +14,8 @@
  * limitations under the License.
  *
  */
-#ifndef GZ_SIM_SYSTEMS_MULTICOPTERVELOCITYCONTROL_HH_
-#define GZ_SIM_SYSTEMS_MULTICOPTERVELOCITYCONTROL_HH_
+#ifndef GZ_SIM_SYSTEMS_MULTICOPTERVELOCITYCONTROLTUNABLE_HH_
+#define GZ_SIM_SYSTEMS_MULTICOPTERVELOCITYCONTROLTUNABLE_HH_
 
 #include <Eigen/Geometry>
 #include <memory>
@@ -150,13 +150,13 @@ namespace systems
   ///
   /// See examples/worlds/quadcopter.sdf for a demonstration.
   ///
-  class MulticopterVelocityControl
+  class MulticopterVelocityControlTunable
       : public System,
         public ISystemConfigure,
         public ISystemPreUpdate
   {
     /// \brief Constructor
-    public: MulticopterVelocityControl() = default;
+    public: MulticopterVelocityControlTunable() = default;
 
     // Documentation inherited
     public: void Configure(const Entity &_entity,
@@ -222,11 +222,11 @@ namespace systems
     private: Eigen::VectorXd rotorVelocities;
 
     /// \brief Velocity controller
-    private: std::unique_ptr<multicopter_control::LeeVelocityController>
+    private: std::unique_ptr<multicopter_control_tunable::LeeVelocityController>
                  velocityController;
 
     /// \brief Noise parameters read from SDF
-    private: multicopter_control::NoiseParameters noiseParameters;
+    private: multicopter_control_tunable::NoiseParameters noiseParameters;
 
     /// \brief Current command velocity. This velocity is a reference velocity
     /// that the controller will try to maintain. A command of zeros must be
