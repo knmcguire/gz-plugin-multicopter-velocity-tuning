@@ -23,3 +23,11 @@ Made for Ubuntu 22.04 and Gazebo Harmonic
     cmake ..
     make 
     export GZ_SIM_SYSTEM_PLUGIN_PATH=`pwd`
+
+
+## Add multicopter plugin to sdf file
+
+Replace the regular MulticopterControl with
+
+    <plugin filename="MulticopterControlTunable" name="gz::sim::v8::systems::MulticopterVelocityControlTunable">
+
