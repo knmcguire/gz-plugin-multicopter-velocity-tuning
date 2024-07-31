@@ -1,10 +1,15 @@
-gz_add_system(multicopter-control
-  SOURCES
-  MulticopterVelocityControl.cc
-  Common.cc
-  LeeVelocityController.cc
-  PUBLIC_LINK_LIBS
-    gz-common${GZ_COMMON_VER}::gz-common${GZ_COMMON_VER}
-    gz-transport${GZ_TRANSPORT_VER}::gz-transport${GZ_TRANSPORT_VER}
-    Eigen3::Eigen
-)
+cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
+
+find_package(gz-cmake3 REQUIRED)
+
+project(MulticopterControlTunable)
+
+find_package(gz-plugin2 REQUIRED COMPONENTS register)
+set(GZ_PLUGIN_VER ${gz-plugin2_VERSION_MAJOR})
+
+find_package(gz-sim8 REQUIRED)
+add_library(MulticopterControlTunable SHARED MulticopterVelocityControl.cc LeeVelocityController.cc)
+set_property(TARGET MulticopterControlTunable PROPERTY CXX_STANDARD 17)
+target_link_libraries(MulticopterControlTunable
+  PRIVATE gz-plugin${GZ_PLUGIN_VER}::gz-plugin${GZ_PLUGIN_VER}
+  PRIVATE gz-sim8::gz-sim8)

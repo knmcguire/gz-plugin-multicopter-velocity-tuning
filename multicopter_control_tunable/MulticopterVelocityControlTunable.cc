@@ -42,7 +42,7 @@
 #include "gz/sim/Link.hh"
 #include "gz/sim/Model.hh"
 
-#include "MulticopterVelocityControl.hh"
+#include "MulticopterVelocityControlTunable.hh"
 
 
 using namespace gz;
@@ -51,7 +51,7 @@ using namespace systems;
 using namespace multicopter_control;
 
 //////////////////////////////////////////////////
-void MulticopterVelocityControl::Configure(const Entity &_entity,
+void MulticopterVelocityControlTunable::Configure(const Entity &_entity,
     const std::shared_ptr<const sdf::Element> &_sdf,
     EntityComponentManager &_ecm,
     EventManager &/*_eventMgr*/)
@@ -60,7 +60,7 @@ void MulticopterVelocityControl::Configure(const Entity &_entity,
 
   if (!this->model.Valid(_ecm))
   {
-    gzerr << "MulticopterVelocityControl plugin should be attached to a model "
+    gzerr << "MulticopterVelocityControlTunable plugin should be attached to a model "
            << "entity. Failed to initialize." << std::endl;
     return;
   }
@@ -286,12 +286,12 @@ void MulticopterVelocityControl::Configure(const Entity &_entity,
   // Subscribe to actuator command messages
   std::string topic{this->robotNamespace + "/" + this->commandSubTopic};
 
-  this->node.Subscribe(topic, &MulticopterVelocityControl::OnTwist, this);
+  this->node.Subscribe(topic, &MulticopterVelocityControlTunable::OnTwist, this);
   gzmsg << "MulticopterVelocityControl subscribing to Twist messages on ["
          << topic << "]" << std::endl;
 
   std::string enableTopic{this->robotNamespace + "/" + this->enableSubTopic};
-  this->node.Subscribe(enableTopic, &MulticopterVelocityControl::OnEnable,
+  this->node.Subscribe(enableTopic, &MulticopterVelocityControlTunable::OnEnable,
                        this);
   gzmsg << "MulticopterVelocityControl subscribing to Boolean messages on ["
          << enableTopic << "]" << std::endl;
@@ -307,7 +307,7 @@ void MulticopterVelocityControl::Configure(const Entity &_entity,
 }
 
 //////////////////////////////////////////////////
-math::Inertiald MulticopterVelocityControl::VehicleInertial(
+math::Inertiald MulticopterVelocityControlTunable::VehicleInertial(
     const EntityComponentManager &_ecm, Entity _entity)
 {
   math::Inertiald vehicleInertial;
@@ -334,7 +334,7 @@ math::Inertiald MulticopterVelocityControl::VehicleInertial(
 }
 
 //////////////////////////////////////////////////
-void MulticopterVelocityControl::PreUpdate(
+void MulticopterVelocityControlTunable::PreUpdate(
     const UpdateInfo &_info,
     EntityComponentManager &_ecm)
 {
@@ -411,7 +411,7 @@ void MulticopterVelocityControl::PreUpdate(
 }
 
 //////////////////////////////////////////////////
-void MulticopterVelocityControl::OnTwist(
+void MulticopterVelocityControlTunable::OnTwist(
     const msgs::Twist &_msg)
 {
   std::lock_guard<std::mutex> lock(this->cmdVelMsgMutex);
@@ -419,14 +419,14 @@ void MulticopterVelocityControl::OnTwist(
 }
 
 //////////////////////////////////////////////////
-void MulticopterVelocityControl::OnEnable(
+void MulticopterVelocityControlTunable::OnEnable(
     const msgs::Boolean &_msg)
 {
   this->controllerActive = _msg.data();
 }
 
 //////////////////////////////////////////////////
-void MulticopterVelocityControl::PublishRotorVelocities(
+void MulticopterVelocityControlTunable::PublishRotorVelocities(
     EntityComponentManager &_ecm,
     const Eigen::VectorXd &_vels)
 {
@@ -463,11 +463,7 @@ void MulticopterVelocityControl::PublishRotorVelocities(
   }
 }
 
-GZ_ADD_PLUGIN(MulticopterVelocityControl,
+GZ_ADD_PLUGIN(MulticopterVelocityControlTunable,
                     System,
-                    MulticopterVelocityControl::ISystemConfigure,
-                    MulticopterVelocityControl::ISystemPreUpdate)
-
-GZ_ADD_PLUGIN_ALIAS(
-    MulticopterVelocityControl,
-    "gz::sim::systems::MulticopterVelocityControl")
+                    MulticopterVelocityControlTunable::ISystemConfigure,
+                    MulticopterVelocityControlTunable::ISystemPreUpdate)
