@@ -1,6 +1,6 @@
 # Gazebo Harmonic Plugin to tune the Multicopter velocity controller
 
-Still work in progress!
+**Still work in progress! Works very limited"**
 
 Made for Ubuntu 22.04 and Gazebo Harmonic
 
