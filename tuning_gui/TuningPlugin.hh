@@ -25,7 +25,9 @@ class TuningPlugin : public gz::sim::GuiSystem
 {
   Q_OBJECT
 
-  Q_PROPERTY(double number MEMBER number NOTIFY TuningGainsChanged)
+  Q_PROPERTY(double vel_x MEMBER vel_x NOTIFY TuningGainsChanged)
+  Q_PROPERTY(double vel_y MEMBER vel_y NOTIFY TuningGainsChanged)
+  Q_PROPERTY(double vel_z MEMBER vel_z NOTIFY TuningGainsChanged)
 
   public: TuningPlugin();
   public: ~TuningPlugin() override;
@@ -38,7 +40,10 @@ class TuningPlugin : public gz::sim::GuiSystem
   signals: void TuningGainsChanged();
   public: gz::transport::Node node;
 
-  private: double number{1.0};
+  private: double vel_x{0.03}, vel_y{0.03}, vel_z{0.03};
+  private: double att_roll{0.02}, att_pitch{0.02}, att_yaw{0.02};
+  private: double ang_rate_roll{0.005}, ang_rate_pitch{0.005}, ang_rate_yaw{0.005};
+  private: void publishDoubleMessage(const std::string& topicname, double value);
 
   };
 

@@ -30,10 +30,10 @@ GridLayout {
   anchors.rightMargin: 10
 
   Label {
-    text: 'number'
+    text: 'vel x'
   }
   Label {
-    text: TuningPlugin.number
+    text: TuningPlugin.vel_x
   }
   Slider {
       Layout.columnSpan: 2
@@ -42,7 +42,39 @@ GridLayout {
       to: 1.0
       stepSize: 0.01
       onMoved: function() {
-        TuningPlugin.number = value;
+        TuningPlugin.vel_x = value;
+      }
+  }
+  Label {
+    text: 'vel y'
+  }
+  Label {
+    text: TuningPlugin.vel_y
+  }
+  Slider {
+      Layout.columnSpan: 2
+      from: 0.01
+      value: 0.03
+      to: 1.0
+      stepSize: 0.01
+      onMoved: function() {
+        TuningPlugin.vel_y = value;
+      }
+  }
+  Label {
+    text: 'vel z'
+  }
+  Label {
+    text: TuningPlugin.vel_z
+  }
+  Slider {
+      Layout.columnSpan: 2
+      from: 0.01
+      value: 0.03
+      to: 1.0
+      stepSize: 0.01
+      onMoved: function() {
+        TuningPlugin.vel_z = value;
       }
   }
 }

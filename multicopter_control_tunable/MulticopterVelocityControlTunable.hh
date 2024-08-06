@@ -181,7 +181,17 @@ namespace systems
     /// air, disabling the controller will cause it to fall. If true, the
     /// controller becomes enabled and waits for a twist message.
     private: void OnEnable(const msgs::Boolean &_msg);
-    private: void OnGainUpdate(const msgs::Double &_msg);
+    private: void OnGainUpdateVelX(const msgs::Double &_msg);
+    private: void OnGainUpdateVelY(const msgs::Double &_msg);
+    private: void OnGainUpdateVelZ(const msgs::Double &_msg);
+
+    private : void OnGainUpdateAttRoll(const msgs::Double &_msg);
+    private : void OnGainUpdateAttPitch(const msgs::Double &_msg);
+    private : void OnGainUpdateAttYaw(const msgs::Double &_msg);
+
+    private : void OnGainUpdateAngRateRoll(const msgs::Double &_msg);
+    private : void OnGainUpdateAngRatePitch(const msgs::Double &_msg);
+    private : void OnGainUpdateAngRateYaw(const msgs::Double &_msg);
 
     /// \brief Publish provided rotor velocities
     /// \param[in] _ecm Mutable reference to the EntityComponentManager
@@ -234,7 +244,9 @@ namespace systems
     /// given to stop the vehicle.
     private: std::optional<msgs::Twist> cmdVelMsg;
 
-    private: msgs::Double velocityGainMsg;
+    private: double gainVelX{0.03}, gainVelY{0.03}, gainVelZ{0.03};
+    private: double gainAttRoll{0.02}, gainAttPitch{0.02}, gainAttYaw{0.02};
+    private: double gainAngRateRoll{0.005}, gainAngRatePitch{0.005}, gainAngRateYaw{0.005};
 
     /// \brief Maximum commanded linear velocity
     private: math::Vector3d maximumLinearVelocity;

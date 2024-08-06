@@ -37,22 +37,24 @@ void TuningPlugin::Update(const gz::sim::UpdateInfo & /*_info*/,
     gz::sim::EntityComponentManager &_ecm)
 {
   this->TuningGainsChanged();
-  std::string topicname = "/vel_gain_x";
-  gz::msgs::Double msg;
-  msg.set_data(this->number);
+  this->publishDoubleMessage("/vel_gain_x", this->vel_x);
+  this->publishDoubleMessage("/vel_gain_y", this->vel_y);
+  this->publishDoubleMessage("/vel_gain_z", this->vel_z);
 
-  auto topic = gz::transport::TopicUtils::AsValidTopic(topicname);
-  if(topic.empty())
-  {
-    gzerr << "Invalid topic name: " << topicname << std::endl;
-    return;
-  }
-  gzmsg << "slider "<< this->number << std::endl;
-
-  auto pub = this->node.Advertise<gz::msgs::Double>(topic);
-  pub.Publish(msg);
 
 }
+
+  void TuningPlugin::publishDoubleMessage(const std::string& topicname, double value)
+  {
+    gz::msgs::Double msg;
+    msg.set_data(value);
+
+    auto topic = gz::transport::TopicUtils::AsValidTopic(topicname);
+    gzmsg << "slider " << value << std::endl;
+
+    auto pub = this->node.Advertise<gz::msgs::Double>(topic);
+    pub.Publish(msg);
+  }
 
 GZ_ADD_PLUGIN(TuningPlugin,
                     gz::gui::Plugin)

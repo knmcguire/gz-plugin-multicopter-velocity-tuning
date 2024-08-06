@@ -297,8 +297,17 @@ void MulticopterVelocityControlTunable::Configure(const Entity &_entity,
          << enableTopic << "]" << std::endl;
   std::string Gaintopicname = "/vel_gain_x";
 
-    this->node.Subscribe(Gaintopicname, &MulticopterVelocityControlTunable::OnGainUpdate,
-                       this);
+  this->node.Subscribe("/vel_gain_x", &MulticopterVelocityControlTunable::OnGainUpdateVelX,this);
+  this->node.Subscribe("/vel_gain_y", &MulticopterVelocityControlTunable::OnGainUpdateVelY,this);
+  this->node.Subscribe("/vel_gain_z", &MulticopterVelocityControlTunable::OnGainUpdateVelZ,this);
+
+  this->node.Subscribe("/att_gain_roll", &MulticopterVelocityControlTunable::OnGainUpdateAttRoll,this);
+  this->node.Subscribe("/att_gain_pitch", &MulticopterVelocityControlTunable::OnGainUpdateAttPitch,this);
+  this->node.Subscribe("/att_gain_yaw", &MulticopterVelocityControlTunable::OnGainUpdateAttYaw,this);
+
+  this->node.Subscribe("/ang_rate_gain_roll", &MulticopterVelocityControlTunable::OnGainUpdateAngRateRoll,this);
+  this->node.Subscribe("/ang_rate_gain_pitch", &MulticopterVelocityControlTunable::OnGainUpdateAngRatePitch,this);
+  this->node.Subscribe("/ang_rate_gain_yaw", &MulticopterVelocityControlTunable::OnGainUpdateAngRateYaw,this);
 
   // Create the Actuators component to take control of rotor speeds
   this->rotorVelocitiesMsg.mutable_velocity()->Resize(
@@ -408,10 +417,11 @@ void MulticopterVelocityControlTunable::PreUpdate(
     // Errors would have already been printed
     return;
   }
-  double number = this->velocityGainMsg.data();
-  Eigen::Vector3d velocityGainNew(number, number, number);
+  Eigen::Vector3d velocityGainNew(this->gainVelX, this->gainVelY, this->gainVelZ);
+  Eigen::Vector3d attitudeGainNew(this->gainAttRoll, this->gainAttPitch, this->gainAttYaw);
+  Eigen::Vector3d angularRateGainNew(this->gainAngRateRoll, this->gainAngRatePitch, this->gainAngRateYaw);
 
-  this->velocityController->UpdateParameters(velocityGainNew);
+  this->velocityController->UpdateParameters(velocityGainNew, attitudeGainNew, angularRateGainNew);
   this->velocityController->CalculateRotorVelocities(*frameData, cmdVel,
                                                      this->rotorVelocities);
 
@@ -426,11 +436,62 @@ void MulticopterVelocityControlTunable::OnTwist(
   this->cmdVelMsg = _msg;
 }
 
-void MulticopterVelocityControlTunable::OnGainUpdate(
+void MulticopterVelocityControlTunable::OnGainUpdateVelX(
     const msgs::Double &_msg)
 {
-  this->velocityGainMsg = _msg;
+  this->gainVelX = _msg.data();
 }
+
+void MulticopterVelocityControlTunable::OnGainUpdateVelY(
+    const msgs::Double &_msg)
+{
+  this->gainVelY = _msg.data();
+}
+
+void MulticopterVelocityControlTunable::OnGainUpdateVelZ(
+    const msgs::Double &_msg)
+{
+  this->gainVelZ = _msg.data();
+}
+
+void MulticopterVelocityControlTunable::OnGainUpdateAttRoll(
+    const msgs::Double &_msg)
+{
+  this->gainAttRoll = _msg.data();
+}
+
+void MulticopterVelocityControlTunable::OnGainUpdateAttPitch(
+    const msgs::Double &_msg)
+{
+  this->gainAttPitch = _msg.data();
+}
+
+void MulticopterVelocityControlTunable::OnGainUpdateAttYaw(
+    const msgs::Double &_msg)
+{
+  this->gainAttYaw = _msg.data();
+}
+
+void MulticopterVelocityControlTunable::OnGainUpdateAngRateRoll(
+    const msgs::Double &_msg)
+{
+  this->gainAngRateRoll = _msg.data();
+}
+
+void MulticopterVelocityControlTunable::OnGainUpdateAngRatePitch(
+    const msgs::Double &_msg)
+{
+  this->gainAngRatePitch = _msg.data();
+}
+
+void MulticopterVelocityControlTunable::OnGainUpdateAngRateYaw(
+    const msgs::Double &_msg)
+{
+  this->gainAngRateYaw = _msg.data();
+}
+
+
+
 
 //////////////////////////////////////////////////
 void MulticopterVelocityControlTunable::OnEnable(
