@@ -17,17 +17,21 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import QtQuick.Controls.Material 2.1
+import QtQuick.Controls.Styles 1.4
+import gz.gui 1.0
 
-
+ColumnLayout {
+  Layout.minimumWidth: 200
+  Layout.minimumHeight: 400
+  Layout.margins: 1
+  anchors.fill: parent
+  focus: true
 
 GridLayout {
-  columns: 2
-  columnSpacing: 10
-  Layout.minimumWidth: 350
-  Layout.minimumHeight: 500
-  anchors.fill: parent
-  anchors.leftMargin: 10
-  anchors.rightMargin: 10
+    Layout.fillWidth: true
+    Layout.margins: 1
+    columns: 4
 
   Label {
     text: 'vel x'
@@ -39,7 +43,7 @@ GridLayout {
       Layout.columnSpan: 2
       from: 0.01
       value: 0.03
-      to: 1.0
+      to: 2.0
       stepSize: 0.01
       onMoved: function() {
         TuningPlugin.vel_x = value;
@@ -55,7 +59,7 @@ GridLayout {
       Layout.columnSpan: 2
       from: 0.01
       value: 0.03
-      to: 1.0
+      to: 2.0
       stepSize: 0.01
       onMoved: function() {
         TuningPlugin.vel_y = value;
@@ -69,13 +73,109 @@ GridLayout {
   }
   Slider {
       Layout.columnSpan: 2
-      from: 0.01
+      from: 0.03
       value: 0.03
-      to: 1.0
+      to: 2.0
       stepSize: 0.01
       onMoved: function() {
         TuningPlugin.vel_z = value;
       }
   }
+  Label {
+    text: 'att_roll'
+  }
+  Label {
+    text: TuningPlugin.att_roll
+  }
+  Slider {
+      Layout.columnSpan: 2
+      from: 0.01
+      value: 0.02
+      to: 10.0
+      stepSize: 0.01
+      onMoved: function() {
+        TuningPlugin.att_roll = value;
+      }
+  }
+  Label {
+    text: 'att_pitch'
+  }
+  Label {
+    text: TuningPlugin.att_pitch
+  }
+  Slider {
+      Layout.columnSpan: 2
+      from: 0.01
+      value: 0.02
+      to: 10.0
+      stepSize: 0.01
+      onMoved: function() {
+        TuningPlugin.att_pitch = value;
+      }
+  }
+  Label {
+    text: 'att_yaw'
+  }
+  Label {
+    text: TuningPlugin.att_yaw
+  }
+  Slider {
+      Layout.columnSpan: 2
+      from: 0.01
+      value: 0.02
+      to: 10.0
+      stepSize: 0.01
+      onMoved: function() {
+        TuningPlugin.att_yaw = value;
+      }
+  }
+  Label {
+    text: 'ang_rate_roll'
+  }
+  Label {
+    text: TuningPlugin.ang_rate_roll
+  }
+  Slider {
+      Layout.columnSpan: 2
+      from: 0.001
+      value: 0.005
+      to: 1.0
+      stepSize: 0.005
+      onMoved: function() {
+        TuningPlugin.ang_rate_roll = value;
+      }
+  }
+  Label {
+    text: 'ang_rate_pitch'
+  }
+  Label {
+    text: TuningPlugin.ang_rate_pitch
+  }
+  Slider {
+      Layout.columnSpan: 2
+      from: 0.001
+      value: 0.005
+      to: 1.0
+      stepSize: 0.005
+      onMoved: function() {
+        TuningPlugin.ang_rate_pitch = value;
+      }
+  }
+  Label {
+    text: 'ang_rate_yaw'
+  }
+  Label {
+    text: TuningPlugin.ang_rate_yaw
+  }
+  Slider {
+      Layout.columnSpan: 2
+      from: 0.001
+      value: 0.005
+      to: 1.0
+      stepSize: 0.005
+      onMoved: function() {
+        TuningPlugin.ang_rate_yaw = value;
+      }
+  }
 }
-
+}

@@ -93,6 +93,7 @@ bool LeeVelocityController::UpdateParameters(Eigen::Vector3d newVelocityGain,
   this->controllerParameters.velocityGain = newVelocityGain;
   this->controllerParameters.attitudeGain = newAttitudeGain;
   this->controllerParameters.angularRateGain = newAngularRateGain;
+
   return true;
 }
 
@@ -102,19 +103,30 @@ void LeeVelocityController::CalculateRotorVelocities(
     Eigen::VectorXd &_rotorVelocities) const
 {
 
-    gzmsg << "new gain " << this->controllerParameters.velocityGain[0] 
-    <<" "<<this->controllerParameters.velocityGain[1]
-    <<" "<<this->controllerParameters.velocityGain[2]<< std::endl;
+    //gzmsg << "new gain " << this->controllerParameters.velocityGain[0] 
+    //<<" "<<this->controllerParameters.velocityGain[1]
+    //<<" "<<this->controllerParameters.velocityGain[2]<< std::endl;
+
+    //gzmsg << "new gain " << this->controllerParameters.velocityGain<< std::endl;
+
+
 
   Eigen::Vector3d acceleration =
       this->ComputeDesiredAcceleration(_frameData, _cmdVel);
 
+  //gzmsg << "acceleration" << acceleration << std::endl;
+
   Eigen::Vector3d angularAcceleration =
       this->ComputeDesiredAngularAcc(_frameData, _cmdVel, acceleration);
+
+  //gzmsg << "angular acceleration" << angularAcceleration << std::endl;
 
   // Project thrust onto body z axis.
   double thrust = -this->vehicleParameters.mass *
                   acceleration.dot(_frameData.pose.linear().col(2));
+  //gzmsg << "rotor" << this->vehicleParameters.rotorConfiguration[0].armLength  << std::endl; 
+    
+
 
   Eigen::Vector4d angularAccelerationThrust;
   angularAccelerationThrust.block<3, 1>(0, 0) = angularAcceleration;
@@ -135,6 +147,14 @@ Eigen::Vector3d LeeVelocityController::ComputeDesiredAcceleration(
   Eigen::Vector3d velocityError = _frameData.linearVelocityWorld -
                                   _frameData.pose.linear() * _cmdVel.linear;
 
+  gzmsg << "velocity error" <<  velocityError << std::endl;
+  
+  Eigen::Vector3d cmd_world =  _frameData.pose.linear() * _cmdVel.linear;
+
+
+                                  
+
+  //gzmsg << "velocity" <<  cmd_world << std::endl;
   Eigen::Vector3d accelCommand =
       velocityError.cwiseProduct(this->controllerParameters.velocityGain) /
       this->vehicleParameters.mass;

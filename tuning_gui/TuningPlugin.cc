@@ -40,6 +40,12 @@ void TuningPlugin::Update(const gz::sim::UpdateInfo & /*_info*/,
   this->publishDoubleMessage("/vel_gain_x", this->vel_x);
   this->publishDoubleMessage("/vel_gain_y", this->vel_y);
   this->publishDoubleMessage("/vel_gain_z", this->vel_z);
+  this->publishDoubleMessage("/att_gain_roll", this->att_roll);
+  this->publishDoubleMessage("/att_gain_pitch", this->att_pitch);
+  this->publishDoubleMessage("/att_gain_yaw", this->att_roll);
+  this->publishDoubleMessage("/ang_rate_gain_roll", this->ang_rate_roll);
+  this->publishDoubleMessage("/ang_rate_gain_pitch", this->ang_rate_pitch);
+  this->publishDoubleMessage("/ang_rate_gain_yaw", this->ang_rate_yaw);
 
 
 }
@@ -50,7 +56,6 @@ void TuningPlugin::Update(const gz::sim::UpdateInfo & /*_info*/,
     msg.set_data(value);
 
     auto topic = gz::transport::TopicUtils::AsValidTopic(topicname);
-    gzmsg << "slider " << value << std::endl;
 
     auto pub = this->node.Advertise<gz::msgs::Double>(topic);
     pub.Publish(msg);

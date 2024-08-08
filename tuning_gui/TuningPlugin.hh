@@ -25,9 +25,15 @@ class TuningPlugin : public gz::sim::GuiSystem
 {
   Q_OBJECT
 
-  Q_PROPERTY(double vel_x MEMBER vel_x NOTIFY TuningGainsChanged)
-  Q_PROPERTY(double vel_y MEMBER vel_y NOTIFY TuningGainsChanged)
-  Q_PROPERTY(double vel_z MEMBER vel_z NOTIFY TuningGainsChanged)
+  Q_PROPERTY(double vel_x MEMBER vel_x NOTIFY TuningGainsChanged);
+  Q_PROPERTY(double vel_y MEMBER vel_y NOTIFY TuningGainsChanged);
+  Q_PROPERTY(double vel_z MEMBER vel_z NOTIFY TuningGainsChanged);
+  Q_PROPERTY(double att_roll MEMBER att_roll NOTIFY TuningGainsChanged);
+  Q_PROPERTY(double att_pitch MEMBER att_pitch NOTIFY TuningGainsChanged);
+  Q_PROPERTY(double att_yaw MEMBER att_yaw NOTIFY TuningGainsChanged);
+  Q_PROPERTY(double ang_rate_roll MEMBER ang_rate_roll NOTIFY TuningGainsChanged);
+  Q_PROPERTY(double ang_rate_pitch MEMBER ang_rate_pitch NOTIFY TuningGainsChanged);
+  Q_PROPERTY(double ang_rate_yaw MEMBER ang_rate_yaw NOTIFY TuningGainsChanged);
 
   public: TuningPlugin();
   public: ~TuningPlugin() override;
